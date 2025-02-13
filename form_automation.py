@@ -59,6 +59,8 @@ try:
 except Exception as e:
     print(f"❌ Erro inesperado: {e}")
 
+print(driver.page_source)  # Imprime o HTML da página
+
 # Aguardar o carregamento dos campos do formulário
 #time.sleep(3)
 WebDriverWait(driver, 90).until(lambda d: d.execute_script("return document.readyState") == "complete")
