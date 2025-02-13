@@ -71,7 +71,8 @@ WebDriverWait(driver, 60).until(
 # Preencher as perguntas conforme a ordem
 
 # 1. Acesso para data: Rádio "Próximo dia útil"
-acesso_para_data = driver.find_element(By.XPATH, "//input[@value='Próximo dia útil']")
+#acesso_para_data = driver.find_element(By.XPATH, "//input[@value='Próximo dia útil']")
+acesso_para_data = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 acesso_para_data.click()
 
 
