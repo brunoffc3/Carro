@@ -52,6 +52,14 @@ jobs:
 
           # Confirma se o ChromeDriver foi instalado corretamente
           chromedriver --version
+          
+      - name: Instalar Xvfb
+        run: sudo apt-get install -y xvfb
+
+      - name: Executar Xvfb
+        run: |
+          export DISPLAY=:99.0
+          Xvfb :99 -screen 0 1280x1024x24 &
 
       - name: Executar script de automação
         env:
