@@ -16,7 +16,7 @@ user_data_dir = tempfile.mkdtemp()
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")  # Executa sem abrir o navegador
+#options.add_argument("--headless")  # Executa sem abrir o navegador
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument(f"--user-data-dir={user_data_dir}")  # Diretório único para dados de usuário
@@ -64,7 +64,7 @@ except Exception as e:
 
 # Aguardar o carregamento dos campos do formulário
 time.sleep(5)
-WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
 # Preencher as perguntas conforme a ordem
 
