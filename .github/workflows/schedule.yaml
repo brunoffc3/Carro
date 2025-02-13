@@ -2,8 +2,8 @@ name: Preencher Formulário
 
 on:
   schedule:
-    - cron: '55 10 * * THU'  # Executa às 10:55 UTC (ajuste conforme necessário)
-  workflow_dispatch:  # Permite disparar manualmente
+    - cron: '55 10 * * THU'  # Executa às 10:55 UTC
+  workflow_dispatch:
 
 jobs:
   fill-form:
@@ -27,15 +27,17 @@ jobs:
           sudo apt update
           sudo apt install -y google-chrome-stable
 
-      - name: Instalar ChromeDriver
+      - name: Instalar ChromeDriver (versão correta)
         run: |
-          CHROME_VERSION=$(google-chrome --version | grep -oP '[0-9]+\.[0-9]+\.[0-9]+')
-          wget -q "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip" -O chromedriver.zip
+          CHROME_VERSION=$(google-chrome --version | grep -oP '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          CHROME_MAJOR=$(echo $CHROME_VERSION | cut -d. -f1)
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAJOR")
+          wget -q "https://chromedriver.storage.googleapis.com/$DRIVER_VERSION/chromedriver_linux64.zip" -O chromedriver.zip
           unzip chromedriver.zip
           sudo mv chromedriver /usr/local/bin/
           sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Executar script de automação
         env:
-          DISPLAY: ':99.0'  # Evita problemas com interface gráfica
+          DISPLAY: ':99.0'
         run: python form_automation.py
