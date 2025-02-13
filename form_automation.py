@@ -70,11 +70,16 @@ start_button = driver.execute_script("""
 """)
 
 # Verificar se o botão foi encontrado e clicá-lo
-if start_button:
-    driver.execute_script("arguments[0].click();", start_button)
-    print("✅ Botão 'Iniciar agora' clicado com sucesso!")
-else:
-    print("❌ Erro: O botão 'Próximo dia útil' não foi encontrado.")
+start_button = driver.execute_script("""
+    let button = document.querySelector("input[value='Próximo dia útil']");
+    if (button) {
+        button.click();
+        return "Clique realizado!";
+    } else {
+        return "Botão não encontrado.";
+    }
+""")
+print(start_button)  # Para verificar o resultado
 
 # Preencher as perguntas conforme a ordem
 
