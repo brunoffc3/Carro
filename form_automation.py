@@ -13,7 +13,7 @@ import time
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")  # Executa sem abrir o navegador
+#options.add_argument("--headless")  # Executa sem abrir o navegador
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
@@ -26,11 +26,11 @@ form_url = "https://forms.office.com/pages/responsepage.aspx?id=fK7T5Tib3kigh_Zz
 
 # 🔹 Acessa a página do formulário
 driver.get(form_url)
-time.sleep(3)  # Tempo para carregar
+time.sleep(5)  # Tempo para carregar
 
 # 🔹 CLICAR NO BOTÃO "INICIAR AGORA" SE NECESSÁRIO
 try:
-    wait = WebDriverWait(driver, 15)
+    wait = WebDriverWait(driver, 30)
 
     start_button = None
     for _ in range(3):  # Tenta no máximo 3 vezes caso o botão fique "stale"
@@ -59,8 +59,8 @@ except Exception as e:
     print(f"❌ Erro inesperado: {e}")
 
 # Aguardar o carregamento dos campos do formulário
-time.sleep(3)
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+time.sleep(5)
+WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
 # Preencher as perguntas conforme a ordem
 
