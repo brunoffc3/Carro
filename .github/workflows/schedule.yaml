@@ -22,28 +22,24 @@ jobs:
         run: |
           pip install selenium webdriver-manager
 
-      - name: Instalar Google Chrome
+      - name: Instalar Chrome e ChromeDriver
         run: |
+          # Atualiza os pacotes e instala o Google Chrome
           sudo apt update
           sudo apt install -y google-chrome-stable
 
-      - name: Instalar ChromeDriver (versão correta)
-        run: |
-          # Instalação do Google Chrome
-          sudo apt update
-          sudo apt install -y google-chrome-stable
-
-          # Verifica a versão do Chrome instalada
-          CHROME_VERSION=$(google-chrome --version | awk '{print $3}' | cut -d '.' -f1)
+          # Obtém a versão exata do Chrome instalada
+          CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+          CHROME_MAJOR=$(echo $CHROME_VERSION | cut -d '.' -f1)
           echo "Versão do Chrome instalada: $CHROME_VERSION"
 
-          # Obtém a versão correta do ChromeDriver
-          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+          # Obtém a versão mais recente do ChromeDriver para essa versão do Chrome
+          DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAJOR" || echo "")
 
-          # Verifica se a variável foi corretamente preenchida
-          if [[ -z "$DRIVER_VERSION" ]]; then
-            echo "Erro: Não foi possível encontrar a versão correta do ChromeDriver."
-            exit 1
+          # Se a versão do ChromeDriver não for encontrada, tenta usar a última versão disponível
+          if [[ -z "$DRIVER_VERSION" || "$DRIVER_VERSION" == *"Error"* ]]; then
+            echo "Erro ao encontrar versão específica para Chrome $CHROME_MAJOR. Usando versão mais recente do ChromeDriver."
+            DRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
           fi
 
           echo "Versão do ChromeDriver encontrada: $DRIVER_VERSION"
@@ -56,7 +52,6 @@ jobs:
 
           # Confirma se o ChromeDriver foi instalado corretamente
           chromedriver --version
-
 
       - name: Executar script de automação
         env:
