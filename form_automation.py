@@ -16,10 +16,10 @@ user_data_dir = tempfile.mkdtemp()
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
-#options.add_argument("--headless")  # Executa sem abrir o navegador
+options.add_argument("--headless")  # Executa sem abrir o navegador
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-options.add_argument(f"--user-data-dir={user_data_dir}")  # Diretório único para dados de usuário
+#options.add_argument(f"--user-data-dir={user_data_dir}")  # Diretório único para dados de usuário
 
 # Inicializa o WebDriver
 service = Service(ChromeDriverManager().install())
