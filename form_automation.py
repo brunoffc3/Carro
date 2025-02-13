@@ -224,4 +224,4 @@ except Exception as e:
 time.sleep(2)
 driver.quit()
 
-"Adiciona script de automação"
+#"Adiciona script de automação"
