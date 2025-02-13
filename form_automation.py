@@ -64,7 +64,9 @@ except Exception as e:
 
 # Aguardar o carregamento dos campos do formulário
 time.sleep(5)
-WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+WebDriverWait(driver, 60).until(
+    EC.presence_of_element_located((By.TAG_NAME, "body"))
+#WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
 # Preencher as perguntas conforme a ordem
 
