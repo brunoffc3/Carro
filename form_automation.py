@@ -10,13 +10,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException, NoSuchElementException, StaleElementReferenceException
 import time
 
+# Cria um diretório temporário único para o user data
+user_data_dir = tempfile.mkdtemp()
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
-#options.add_argument("--headless")  # Executa sem abrir o navegador
+options.add_argument("--headless")  # Executa sem abrir o navegador
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-options.add_argument("--user-data-dir=/tmp/chrome-user-data")  # Diretório único para dados do usuário
+options.add_argument(f"--user-data-dir={user_data_dir}")  # Diretório único para dados de usuário
 
 # Inicializa o WebDriver
 service = Service(ChromeDriverManager().install())
