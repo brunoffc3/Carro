@@ -13,7 +13,7 @@ import time
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
-options.add_argument("--headless=new")  # Executa sem abrir o navegador
+#options.add_argument("--headless=new")  # Executa sem abrir o navegador
 options.add_argument("--disable-gpu")   # Necessário para algumas VMs
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
@@ -62,7 +62,10 @@ except Exception as e:
 # Aguardar o carregamento dos campos do formulário
 #time.sleep(3)
 WebDriverWait(driver, 30).until(lambda d: d.execute_script("return document.readyState") == "complete")
-WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+WebDriverWait(driver, 90).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+
+print(driver.page_source)  # Ver o que está carregando no ambiente do GitHub Actions
+
 
 # Preencher as perguntas conforme a ordem
 
@@ -224,4 +227,7 @@ except Exception as e:
     print("Erro ao enviar o formulário:", e)
 
 time.sleep(2)
+screenshot_path = "screenshot.png"
+driver.save_screenshot(screenshot_path)
+print(f"📸 Screenshot salva: {screenshot_path}")
 driver.quit()
