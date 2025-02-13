@@ -1,4 +1,3 @@
-import tempfile
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -11,17 +10,12 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException, NoSuchElementException, StaleElementReferenceException
 import time
 
-# Cria um diretório temporário único para o user data
-user_data_dir = tempfile.mkdtemp()
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")  # Executa sem abrir o navegador
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-#options.add_argument(f"--user-data-dir={user_data_dir}")  # Diretório único para dados de usuário
-options.add_argument("--verbose")
-driver.save_screenshot("screenshot.png")
 
 # Inicializa o WebDriver
 service = Service(ChromeDriverManager().install())
@@ -32,11 +26,11 @@ form_url = "https://forms.office.com/pages/responsepage.aspx?id=fK7T5Tib3kigh_Zz
 
 # 🔹 Acessa a página do formulário
 driver.get(form_url)
-time.sleep(5)  # Tempo para carregar
+time.sleep(3)  # Tempo para carregar
 
 # 🔹 CLICAR NO BOTÃO "INICIAR AGORA" SE NECESSÁRIO
 try:
-    wait = WebDriverWait(driver, 30)
+    wait = WebDriverWait(driver, 15)
 
     start_button = None
     for _ in range(3):  # Tenta no máximo 3 vezes caso o botão fique "stale"
@@ -65,16 +59,13 @@ except Exception as e:
     print(f"❌ Erro inesperado: {e}")
 
 # Aguardar o carregamento dos campos do formulário
-time.sleep(5)
-WebDriverWait(driver, 60).until(
-    EC.presence_of_element_located((By.TAG_NAME, "body")))
-#WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+time.sleep(3)
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
 # Preencher as perguntas conforme a ordem
 
 # 1. Acesso para data: Rádio "Próximo dia útil"
-#acesso_para_data = driver.find_element(By.XPATH, "//input[@value='Próximo dia útil']")
-acesso_para_data = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+acesso_para_data = driver.find_element(By.XPATH, "//input[@value='Próximo dia útil']")
 acesso_para_data.click()
 
 
@@ -232,5 +223,3 @@ except Exception as e:
 
 time.sleep(2)
 driver.quit()
-
-#"Adiciona script de automação"
