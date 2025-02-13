@@ -25,4 +25,3 @@ jobs:
       - name: Executar script de automação
         run: python form_automation.py
 
-"Adiciona workflow do GitHub Actions"
