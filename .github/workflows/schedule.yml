@@ -1,0 +1,28 @@
+name: Preencher Formulário
+
+on:
+  schedule:
+    - cron: '55 10 * * THU'  # Executa às 02:00 UTC nas segundas, quartas e sextas
+  workflow_dispatch:  # Permite disparar manualmente se necessário
+
+jobs:
+  fill-form:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Instalar dependências
+        run: |
+          pip install selenium webdriver-manager
+
+      - name: Executar script de automação
+        run: python form_automation.py
+
+"Adiciona workflow do GitHub Actions"
