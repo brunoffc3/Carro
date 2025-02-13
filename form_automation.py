@@ -30,7 +30,7 @@ time.sleep(3)  # Tempo para carregar
 
 # 🔹 CLICAR NO BOTÃO "INICIAR AGORA" SE NECESSÁRIO
 try:
-    wait = WebDriverWait(driver, 15)
+    wait = WebDriverWait(driver, 30)
 
     start_button = None
     for _ in range(3):  # Tenta no máximo 3 vezes caso o botão fique "stale"
@@ -60,7 +60,7 @@ except Exception as e:
 
 # Aguardar o carregamento dos campos do formulário
 time.sleep(3)
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
 # Preencher as perguntas conforme a ordem
 
