@@ -16,6 +16,7 @@ options = webdriver.ChromeOptions()
 #options.add_argument("--headless")  # Executa sem abrir o navegador
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--user-data-dir=/tmp/chrome-user-data")  # Diretório único para dados do usuário
 
 # Inicializa o WebDriver
 service = Service(ChromeDriverManager().install())
