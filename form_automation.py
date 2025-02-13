@@ -13,7 +13,8 @@ import time
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
-options.add_argument("--headless")  # Executa sem abrir o navegador
+options.add_argument("--headless=new")  # Executa sem abrir o navegador
+options.add_argument("--disable-gpu")   # Necessário para algumas VMs
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
@@ -59,8 +60,9 @@ except Exception as e:
     print(f"❌ Erro inesperado: {e}")
 
 # Aguardar o carregamento dos campos do formulário
-time.sleep(3)
-WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+#time.sleep(3)
+WebDriverWait(driver, 30).until(lambda d: d.execute_script("return document.readyState") == "complete")
+WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
 # Preencher as perguntas conforme a ordem
 
