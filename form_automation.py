@@ -61,8 +61,18 @@ except Exception as e:
 
 # Aguardar o carregamento dos campos do formulário
 #time.sleep(3)
-WebDriverWait(driver, 30).until(lambda d: d.execute_script("return document.readyState") == "complete")
-WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
+WebDriverWait(driver, 90).until(lambda d: d.execute_script("return document.readyState") == "complete")
+start_button = driver.execute_script("""
+    let button = document.querySelector('input[value="Próximo dia útil"]');
+    return button && window.getComputedStyle(button).display !== 'none' ? button : null;
+""")
+
+# Verificar se o botão foi encontrado e clicá-lo
+if start_button:
+    driver.execute_script("arguments[0].click();", start_button)
+    print("✅ Botão 'Iniciar agora' clicado com sucesso!")
+else:
+    print("❌ Erro: O botão 'Próximo dia útil' não foi encontrado.")
 
 # Preencher as perguntas conforme a ordem
 
