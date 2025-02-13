@@ -59,27 +59,10 @@ try:
 except Exception as e:
     print(f"❌ Erro inesperado: {e}")
 
-print(driver.page_source)  # Imprime o HTML da página
-
 # Aguardar o carregamento dos campos do formulário
 #time.sleep(3)
-WebDriverWait(driver, 90).until(lambda d: d.execute_script("return document.readyState") == "complete")
-start_button = driver.execute_script("""
-    let button = document.querySelector('input[value="Próximo dia útil"]');
-    return button && window.getComputedStyle(button).display !== 'none' ? button : null;
-""")
-
-# Verificar se o botão foi encontrado e clicá-lo
-start_button = driver.execute_script("""
-    let button = document.querySelector("input[value='Próximo dia útil']");
-    if (button) {
-        button.click();
-        return "Clique realizado!";
-    } else {
-        return "Botão não encontrado.";
-    }
-""")
-print(start_button)  # Para verificar o resultado
+WebDriverWait(driver, 30).until(lambda d: d.execute_script("return document.readyState") == "complete")
+WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
 # Preencher as perguntas conforme a ordem
 
