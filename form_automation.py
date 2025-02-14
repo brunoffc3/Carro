@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException, NoSuchElementException, StaleElementReferenceException
 import time
-import os
+
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
@@ -31,7 +31,7 @@ time.sleep(3)  # Tempo para carregar
 
 # 🔹 CLICAR NO BOTÃO "INICIAR AGORA" SE NECESSÁRIO
 try:
-    wait = WebDriverWait(driver, 30)
+    wait = WebDriverWait(driver, 15)
 
     start_button = None
     for _ in range(3):  # Tenta no máximo 3 vezes caso o botão fique "stale"
@@ -61,11 +61,6 @@ except Exception as e:
 
 # Aguardar o carregamento dos campos do formulário
 time.sleep(3)
-#WebDriverWait(driver, 90).until(lambda d: d.execute_script("return document.readyState") == "complete")
-#WebDriverWait(driver, 90).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
-
-#print(driver.page_source)  # Ver o que está carregando no ambiente do GitHub Actions
-
 
 # Preencher as perguntas conforme a ordem
 
@@ -134,8 +129,6 @@ try:
 except Exception as e:
     print("Erro ao preencher o campo 'Masp':", e)
 
-#time.sleep(3)
-#WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@aria-describedby='r174b4cc3b2994ce283a6798c35daab45_placeholder_content']")))
 
 # 6. Órgão: Dropdown
 try:
