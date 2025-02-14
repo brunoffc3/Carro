@@ -27,7 +27,9 @@ form_url = "https://forms.office.com/pages/responsepage.aspx?id=fK7T5Tib3kigh_Zz
 
 # 🔹 Acessa a página do formulário
 driver.get(form_url)
-time.sleep(3)  # Tempo para carregar
+print("🔍 Verificando o título da página...")
+print("📄 Título da página carregada:", driver.title)
+time.sleep(10)  # Tempo para carregar
 
 # 🔹 CLICAR NO BOTÃO "INICIAR AGORA" SE NECESSÁRIO
 try:
@@ -60,13 +62,20 @@ except Exception as e:
     print(f"❌ Erro inesperado: {e}")
 
 # Aguardar o carregamento dos campos do formulário
-time.sleep(3)
+time.sleep(10)
 
 # Preencher as perguntas conforme a ordem
 
 # 1. Acesso para data: Rádio "Próximo dia útil"
-acesso_para_data = driver.find_element(By.XPATH, "//input[@value='Próximo dia útil']")
-acesso_para_data.click()
+try:
+    acesso_para_data = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']"))
+    )
+    acesso_para_data.click()
+    print("✅ Opção 'Próximo dia útil' selecionada")
+except TimeoutException:
+    print("❌ Erro: O campo 'Próximo dia útil' não apareceu a tempo")
+#acesso_para_data.click()
 
 
 # 3. Nome completo: Dropdown
