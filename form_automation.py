@@ -9,7 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException, NoSuchElementException, StaleElementReferenceException
 import time
-
+import os
 
 # ✅ Configuração do Selenium
 options = webdriver.ChromeOptions()
@@ -60,11 +60,11 @@ except Exception as e:
     print(f"❌ Erro inesperado: {e}")
 
 # Aguardar o carregamento dos campos do formulário
-#time.sleep(3)
-WebDriverWait(driver, 90).until(lambda d: d.execute_script("return document.readyState") == "complete")
+time.sleep(3)
+#WebDriverWait(driver, 90).until(lambda d: d.execute_script("return document.readyState") == "complete")
 #WebDriverWait(driver, 90).until(EC.presence_of_element_located((By.XPATH, "//input[@value='Próximo dia útil']")))
 
-print(driver.page_source)  # Ver o que está carregando no ambiente do GitHub Actions
+#print(driver.page_source)  # Ver o que está carregando no ambiente do GitHub Actions
 
 
 # Preencher as perguntas conforme a ordem
