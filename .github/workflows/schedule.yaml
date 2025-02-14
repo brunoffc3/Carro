@@ -67,7 +67,7 @@ jobs:
         run: python form_automation.py
         
       - name: Upload da Screenshot
-        if: failure()  # Só salva se o script falhar
+        if: always()  # Só salva se o script falhar
         uses: actions/upload-artifact@v4
         with:
           name: screenshot
